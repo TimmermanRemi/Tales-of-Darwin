@@ -9,7 +9,7 @@ import fr.iutlens.mmi.jumper.utils.SpriteSheet;
  */
 
 public class Level {
-    public static final int VISIBLE_TILES = 10;
+    public static final int VISIBLE_TILES = 15;
 
 
     // Codes pour le décor

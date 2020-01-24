@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.Arrays;
@@ -13,7 +14,7 @@ import fr.iutlens.mmi.jumper.utils.RefreshHandler;
 import fr.iutlens.mmi.jumper.utils.SpriteSheet;
 import fr.iutlens.mmi.jumper.utils.TimerAction;
 
-public class GameView extends View implements TimerAction, AccelerationProxy.AccelerationListener {
+public class GameView extends View implements TimerAction, AccelerationProxy.AccelerationListener, View.OnTouchListener {
     public static final float SPEED = 0.1f;
     private RefreshHandler timer;
     private Level level;
@@ -62,15 +63,19 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
         timer = new RefreshHandler(this);
         current_pos =0;
         alpha = 0.5f;
-
+        timer.scheduleRefresh(30);
 
         // Un clic sur la vue lance (ou relance) l'animation
-        this.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!timer.isRunning()) timer.scheduleRefresh(30);
-            }
-        });
+//        this.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                hero.jump(1.5f);
+//
+//            }
+//        });
+
+        this.setOnTouchListener(this);
+
     }
 
     /**
@@ -81,7 +86,7 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
         if (this.isShown()) { // Si la vue est visible
             timer.scheduleRefresh(30); // programme le prochain rafraichissement
             current_pos += speed;
-            if (current_pos>level.getLength()) current_pos = 0;
+            if (current_pos>level.getLength()) current_pos = 0; //permet de boucler le niveau
             if (current_pos<0) speed = 0;
             hero.update(level.getFloor(current_pos+1),level.getSlope(current_pos+1));
 
@@ -165,13 +170,26 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
     }
 
     public void mv_right() {
-        speed = SPEED;
+        if(speed == -SPEED) speed = 0;
+        else speed = SPEED;
     }
 
     public void mv_left() {
         if(current_pos>0){
-            speed = -SPEED;
+            if(speed == SPEED) speed = 0;
+            else speed = -SPEED;
         }
 
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if (event.getAction()== MotionEvent.ACTION_DOWN){
+            hero.jump(1.5f);
+            return true;
+        }
+
+
+        return false;
     }
 }
