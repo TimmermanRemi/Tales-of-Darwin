@@ -21,6 +21,8 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
     private Hero hero;
     private double prep;
     private float speed;
+    private float alpha;
+    private float alpha_target;
 
     public GameView(Context context) {
         super(context);
@@ -58,6 +60,9 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
         // Gestion du rafraichissement de la vue. La méthode update (juste en dessous)
         // sera appelée toutes les 30 ms
         timer = new RefreshHandler(this);
+        current_pos =0;
+        alpha = 0.5f;
+
 
         // Un clic sur la vue lance (ou relance) l'animation
         this.setOnClickListener(new OnClickListener() {
@@ -77,7 +82,19 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
             timer.scheduleRefresh(30); // programme le prochain rafraichissement
             current_pos += speed;
             if (current_pos>level.getLength()) current_pos = 0;
+            if (current_pos<0) speed = 0;
             hero.update(level.getFloor(current_pos+1),level.getSlope(current_pos+1));
+
+
+            if (speed>=0) alpha_target=0.3f;
+            else alpha_target = 0.6f;
+
+
+            if (Math.abs((alpha_target-alpha))< 0.05f) alpha = alpha_target;
+            else if (alpha< alpha_target) alpha += 0.05f;
+            else if (alpha > alpha_target) alpha -= 0.05f;
+
+
             invalidate(); // demande à rafraichir la vue
         }
     }
@@ -113,7 +130,10 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
 
         // La suite de transfomations est à interpréter "à l'envers"
 
-        canvas.translate(getWidth()/3,getHeight()/2);
+        int x = (int) (getWidth() * alpha);
+
+
+        canvas.translate(x,getHeight()/2);
 
         // On mets à l'échelle calculée au dessus
         canvas.scale(scale, scale);
@@ -149,6 +169,9 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
     }
 
     public void mv_left() {
-        speed = -SPEED;
+        if(current_pos>0){
+            speed = -SPEED;
+        }
+
     }
 }

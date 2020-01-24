@@ -128,9 +128,11 @@ public class Level {
     public void paint(Canvas canvas, float pos){
         if (pos>=getLength()) pos = getLength()-1;
         int start = (int) Math.floor(pos);
+        start = start-VISIBLE_TILES;
+        if (start<0) start = 0;
         float offset = - (pos-start);
 
-        for(int i = 0; i <= VISIBLE_TILES; ++i) {
+        for(int i = 0; i <= 2*VISIBLE_TILES; ++i) {
                 int ndx = (i+start) % sprite_id.length;
                 int id =  sprite_id[ndx];
                 if (id != -1) sprite.paint(canvas,id,
