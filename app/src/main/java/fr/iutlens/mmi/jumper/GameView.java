@@ -20,6 +20,7 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
     private float current_pos;
     private Hero hero;
     private double prep;
+    private float speed;
 
     public GameView(Context context) {
         super(context);
@@ -74,7 +75,7 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
     public void update() {
         if (this.isShown()) { // Si la vue est visible
             timer.scheduleRefresh(30); // programme le prochain rafraichissement
-            current_pos += SPEED;
+            current_pos += speed;
             if (current_pos>level.getLength()) current_pos = 0;
             hero.update(level.getFloor(current_pos+1),level.getSlope(current_pos+1));
             invalidate(); // demande à rafraichir la vue
@@ -112,7 +113,7 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
 
         // La suite de transfomations est à interpréter "à l'envers"
 
-        canvas.translate(0,getHeight()/2);
+        canvas.translate(getWidth()/3,getHeight()/2);
 
         // On mets à l'échelle calculée au dessus
         canvas.scale(scale, scale);
@@ -141,5 +142,13 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
             }
             prep = 0;
         }*/
+    }
+
+    public void mv_right() {
+        speed = SPEED;
+    }
+
+    public void mv_left() {
+        speed = -SPEED;
     }
 }
