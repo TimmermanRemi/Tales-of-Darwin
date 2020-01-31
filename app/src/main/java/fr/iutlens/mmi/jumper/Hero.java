@@ -48,7 +48,8 @@ public class Hero {
         return y;
     }
 
-    public void update(float floor, float slope){
+    public void update(float floor, float slope, float vx, int tuile){
+        this.vx = vx;
         y += vy; // inertie
         float altitude = y-floor;
         if(altitude<-10){
@@ -62,16 +63,18 @@ public class Hero {
 
         if (altitude == 0){ // en contact avec le sol
             if (jump != 0) {
-                vy = jump*IMPULSE*vx; // On saute ?
+                vy = jump*IMPULSE*GameView.SPEED; // On saute ?
                 frame = 3;
             } else {
 //                vy = -G*vx;
-                vy = (slope-G)*vx; // On suit le sol...
-                cpt = (cpt+1)% SAME_FRAME;
-                if (cpt==0) frame = (frame+1)%8;
+                vy = slope*vx - G*GameView.SPEED; // On suit le sol...
+                if (vx != 0) {
+                    cpt = (cpt + 1) % SAME_FRAME;
+                    if (cpt == 0) frame = (frame + 1) % 8;
+                }
             }
         } else { // actuellement en vol
-            vy -= G*vx; // effet de la gravité
+            vy -= G*GameView.SPEED; // effet de la gravité
             frame = (vy>0) ? 3 : 5;
 //            if (y < floor+slope*vx) y = floor+slope*vx; // atterrissage ?
         }
@@ -79,8 +82,19 @@ public class Hero {
         jump = 0;
     }
 
-    public void paint(Canvas canvas, float x, float y){
-        sprite.paint(canvas,frame,x-sprite.w/2,y-sprite.h*BASELINE);
+    public void paint(Canvas canvas, float x, float y, float vx){
+
+        canvas.save();
+        canvas.translate(x,0);
+
+        if(vx < 0) {
+            canvas.scale(-1,1);
+        }
+
+        sprite.paint(canvas,frame,-sprite.w/2,y-sprite.h*BASELINE);
+
+
+        canvas.restore();
     }
 
     public void jump(float strength) {

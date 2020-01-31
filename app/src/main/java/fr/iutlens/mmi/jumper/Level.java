@@ -23,7 +23,7 @@ public class Level {
 
     private final String CODE = " (=)o/\\<^>*éè+-";
     private final String SLOPE ="     +-    +-";
-    private String def = "(==\\^///==^==^\\\\^==/)----<^é>++(//=^=> ++o-- *- o +(==^=)";
+    private String def = "(==\\^///==^==^\\\\^==/)----<^é>++(//=^=>-- ++++o-- *- o-- +++(==^=)";
 
 
     private int[] sprite_id;
@@ -31,6 +31,7 @@ public class Level {
     private int[] slope;
 
     private SpriteSheet sprite;
+    private int ndx;
 
     public Level(int sprite_id, String s){
         if (s == null) s = def;
@@ -133,7 +134,7 @@ public class Level {
         float offset = - (pos-start);
 
         for(int i = 0; i <= 2*VISIBLE_TILES; ++i) {
-                int ndx = (i+start) % sprite_id.length;
+                ndx = (i+start) % sprite_id.length;
                 int id =  sprite_id[ndx];
                 if (id != -1) sprite.paint(canvas,id,
                         getX(offset+i),
@@ -149,5 +150,9 @@ public class Level {
         if (pos>=getLength()) pos = getLength()-1;
         int start = (int) Math.floor(pos);
         return slope[start];
+    }
+
+    public int getTuile() {
+        return ndx;
     }
 }

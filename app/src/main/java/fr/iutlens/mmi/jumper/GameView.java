@@ -20,6 +20,7 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
     private RefreshHandler timer;
     private Level level;
     private float current_pos;
+    private float score;
     private Hero hero;
     private double prep;
     private float speed;
@@ -63,8 +64,10 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
         // sera appelée toutes les 30 ms
         timer = new RefreshHandler(this);
         current_pos =0;
+        score = 0;
         alpha = 0.5f;
         timer.scheduleRefresh(30);
+        mv_right();
 
         // Un clic sur la vue lance (ou relance) l'animation
 //        this.setOnClickListener(new OnClickListener() {
@@ -86,13 +89,16 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
     public void update() {
         if (this.isShown() && !hero.perdu) { // Si la vue est visible et que le héros n'a pas perdu
             timer.scheduleRefresh(30); // programme le prochain rafraichissement
+            score += speed;
             current_pos += speed;
             if (current_pos>level.getLength()) current_pos = 0; //permet de boucler le niveau
             if (current_pos<0) speed = 0;
-            hero.update(level.getFloor(current_pos+1),level.getSlope(current_pos+1));
+            hero.update(level.getFloor(current_pos+1),level.getSlope(current_pos+1), speed, level.getTuile());
 
             if(hero.perdu){ //si l'héros a perdu, lance l'activité menu
                 Intent intent = new Intent(getContext(),MenuActivity.class);
+                intent.putExtra("perdu", true);
+                intent.putExtra("score", (int)(score));
                 getContext().startActivity(intent);
             }
 
@@ -129,7 +135,7 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
 
         float x = 1;
         float y = hero.getY();
-        hero.paint(canvas,level.getX(x),level.getY(y));
+        hero.paint(canvas,level.getX(x),level.getY(y),speed);
 
 
     }
