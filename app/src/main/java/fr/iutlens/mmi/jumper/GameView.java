@@ -1,6 +1,7 @@
 package fr.iutlens.mmi.jumper;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -83,13 +84,17 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
      */
     @Override
     public void update() {
-        if (this.isShown()) { // Si la vue est visible
+        if (this.isShown() && !hero.perdu) { // Si la vue est visible et que le héros n'a pas perdu
             timer.scheduleRefresh(30); // programme le prochain rafraichissement
             current_pos += speed;
             if (current_pos>level.getLength()) current_pos = 0; //permet de boucler le niveau
             if (current_pos<0) speed = 0;
             hero.update(level.getFloor(current_pos+1),level.getSlope(current_pos+1));
 
+            if(hero.perdu){ //si l'héros a perdu, lance l'activité menu
+                Intent intent = new Intent(getContext(),MenuActivity.class);
+                getContext().startActivity(intent);
+            }
 
             if (speed>=0) alpha_target=0.3f;
             else alpha_target = 0.6f;

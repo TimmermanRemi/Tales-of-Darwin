@@ -14,7 +14,7 @@ import fr.iutlens.mmi.jumper.utils.AccelerationProxy;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private AccelerationProxy proxy;
+//    private AccelerationProxy proxy;
     private GameView game;
 
     @Override
@@ -25,20 +25,20 @@ public class MainActivity extends AppCompatActivity {
         game = findViewById(R.id.gameView);
 
         // On configure le jeu pour recevoir les changements d'orientation
-        proxy = new AccelerationProxy(this, game);
+   //     proxy = new AccelerationProxy(this, game);
     }
 
 
     @Override
     protected void onResume() {
         super.onResume();
-        proxy.resume(); // On relance l'accéléromètre
+     //   proxy.resume(); // On relance l'accéléromètre
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        proxy.pause(); // On mets en pause l'accéléromètre
+       // proxy.pause(); // On mets en pause l'accéléromètre
     }
 
     public void button_r(View view) {

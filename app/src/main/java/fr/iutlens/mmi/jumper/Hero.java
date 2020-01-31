@@ -1,5 +1,6 @@
 package fr.iutlens.mmi.jumper;
 
+import android.content.Intent;
 import android.graphics.Canvas;
 
 import fr.iutlens.mmi.jumper.utils.SpriteSheet;
@@ -28,7 +29,7 @@ public class Hero {
 
     private int frame;
     private int cpt;
-
+    public boolean perdu;
 
 
     public Hero(int sprite_id, float vx){
@@ -39,6 +40,7 @@ public class Hero {
         frame =0;
         cpt = 0;
         this.vx = vx;
+        perdu = false;
     }
 
 
@@ -49,7 +51,9 @@ public class Hero {
     public void update(float floor, float slope){
         y += vy; // inertie
         float altitude = y-floor;
-        if(altitude<-1){} //game over
+        if(altitude<-10){
+            perdu = true;
+        } //game over
         if (altitude <0 && altitude>-1){ // On est dans le sol : atterrissage
             vy = 0; //floor-y;
             y = floor;
