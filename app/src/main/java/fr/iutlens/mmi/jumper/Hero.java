@@ -2,6 +2,7 @@ package fr.iutlens.mmi.jumper;
 
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.util.Log;
 
 import fr.iutlens.mmi.jumper.utils.SpriteSheet;
 
@@ -49,6 +50,7 @@ public class Hero {
     }
 
     public void update(float floor, float slope, float vx, int tuile){
+        Log.d("update","tuile:"+tuile);
         this.vx = vx;
         y += vy; // inertie
         float altitude = y-floor;
@@ -62,22 +64,30 @@ public class Hero {
         }
 
         if (altitude == 0){ // en contact avec le sol
-            if (jump != 0) {
-                vy = jump*IMPULSE*GameView.SPEED; // On saute ?
-                frame = 3;
-            } else {
-//                vy = -G*vx;
-                vy = slope*vx - G*GameView.SPEED; // On suit le sol...
-                if (vx != 0) {
-                    cpt = (cpt + 1) % SAME_FRAME;
-                    if (cpt == 0) frame = (frame + 1) % 8;
+            if(tuile < 6) {
+                if (jump != 0) {
+                    vy = jump * IMPULSE * GameView.SPEED; // On saute ?
+                    frame = 3;
+                } else {
+                    //                vy = -G*vx;
+                    if (slope*vx<0) vy = slope * vx - G * GameView.SPEED; // On suit le sol...
+                    if (vx != 0) {
+                        cpt = (cpt + 1) % SAME_FRAME;
+                        if (cpt == 0) frame = (frame + 1) % 8;
+                    }
                 }
+            }else{
+                perdu = true;
             }
         } else { // actuellement en vol
             vy -= G*GameView.SPEED; // effet de la gravité
             frame = (vy>0) ? 3 : 5;
 //            if (y < floor+slope*vx) y = floor+slope*vx; // atterrissage ?
         }
+
+
+
+
 
         jump = 0;
     }

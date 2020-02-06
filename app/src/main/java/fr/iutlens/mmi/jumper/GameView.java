@@ -93,7 +93,7 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
             current_pos += speed;
             if (current_pos>level.getLength()) current_pos = 0; //permet de boucler le niveau
             if (current_pos<0) speed = 0;
-            hero.update(level.getFloor(current_pos+1),level.getSlope(current_pos+1), speed, level.getTuile());
+            hero.update(level.getFloor(current_pos+1),level.getSlope(current_pos+1), speed, level.getTuile(current_pos+1));
 
             if(hero.perdu){ //si l'héros a perdu, lance l'activité menu
                 Intent intent = new Intent(getContext(),MenuActivity.class);
@@ -196,7 +196,7 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         if (event.getAction()== MotionEvent.ACTION_DOWN){
-            hero.jump(1.5f);
+            hero.jump(2.5f);
             return true;
         }
 
