@@ -1,4 +1,4 @@
-package fr.iutlens.mmi.jumper.utils;
+package fr.iutlens.mmi.talesofdarwin.utils;
 
 import android.content.Context;
 import android.hardware.Sensor;

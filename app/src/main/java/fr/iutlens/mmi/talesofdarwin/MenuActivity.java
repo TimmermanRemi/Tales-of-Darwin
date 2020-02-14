@@ -1,4 +1,4 @@
-package fr.iutlens.mmi.jumper;
+package fr.iutlens.mmi.talesofdarwin;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;

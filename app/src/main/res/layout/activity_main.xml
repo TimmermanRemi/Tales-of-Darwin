@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fr.iutlens.mmi.jumper.MainActivity">
+    tools:context="fr.iutlens.mmi.talesofdarwin.MainActivity">
 
     <ImageView
         android:id="@+id/imageView"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/platformer_background_2" />
 
-    <fr.iutlens.mmi.jumper.GameView
+    <fr.iutlens.mmi.talesofdarwin.GameView
         android:id="@+id/gameView"
         android:layout_width="0dp"
         android:layout_height="0dp"

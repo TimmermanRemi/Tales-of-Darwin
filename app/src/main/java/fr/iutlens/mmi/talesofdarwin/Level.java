@@ -1,8 +1,8 @@
-package fr.iutlens.mmi.jumper;
+package fr.iutlens.mmi.talesofdarwin;
 
 import android.graphics.Canvas;
 
-import fr.iutlens.mmi.jumper.utils.SpriteSheet;
+import fr.iutlens.mmi.talesofdarwin.utils.SpriteSheet;
 
 /**
  * Created by dubois on 30/12/2017.

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="fr.iutlens.mmi.jumper">
+    package="fr.iutlens.mmi.talesofdarwin">
 
     <application
         android:allowBackup="true"
@@ -10,10 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="fr.iutlens.mmi.talesofdarwin.MainActivity"
             android:screenOrientation="landscape">
         </activity>
-        <activity android:name=".MenuActivity"
+        <activity android:name="fr.iutlens.mmi.talesofdarwin.MenuActivity"
             android:screenOrientation="landscape">
 
             <intent-filter>

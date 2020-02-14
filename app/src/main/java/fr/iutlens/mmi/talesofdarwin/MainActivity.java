@@ -1,10 +1,8 @@
-package fr.iutlens.mmi.jumper;
+package fr.iutlens.mmi.talesofdarwin;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-
-import fr.iutlens.mmi.jumper.utils.AccelerationProxy;
 
 /***
  * Crédits image : https://pixabay.com/fr/lapin-dessin-animé-jeu-élément-1582176/
