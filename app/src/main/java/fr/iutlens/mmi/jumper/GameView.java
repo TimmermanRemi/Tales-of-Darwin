@@ -55,7 +55,7 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
         // Chargement des feuilles de sprites
         SpriteSheet.register(R.drawable.decor_running,3,4,this.getContext());
         level = new Level(R.drawable.decor_running,null);
-        SpriteSheet.register(R.drawable.running_rabbit,3,3,this.getContext());
+        SpriteSheet.register(R.drawable.running_rabbit,9,9,this.getContext());
         hero = new Hero(R.drawable.running_rabbit,SPEED);
 
 

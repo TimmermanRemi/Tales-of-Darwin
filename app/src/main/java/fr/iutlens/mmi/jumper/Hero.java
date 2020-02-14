@@ -31,6 +31,7 @@ public class Hero {
     private int frame;
     private int cpt;
     public boolean perdu;
+    private int offset;
 
 
     public Hero(int sprite_id, float vx){
@@ -54,6 +55,7 @@ public class Hero {
         this.vx = vx;
         y += vy; // inertie
         float altitude = y-floor;
+        int currentAnnim = 1; //1: Iddle; 2: Runing; 3:Jumping; 4: Midair
         if(altitude<-10){
             perdu = true;
         } //game over
@@ -66,13 +68,13 @@ public class Hero {
         if (altitude == 0){ // en contact avec le sol
             if(tuile < 6) {
                 if (jump != 0) {
+                    currentAnnim = 3;
                     vy = jump * IMPULSE * GameView.SPEED; // On saute ?
-                    frame = 3;
                 } else {
                     //                vy = -G*vx;
                     if (slope*vx<0) vy = slope * vx - G * GameView.SPEED; // On suit le sol...
                     if (vx != 0) {
-                        cpt = (cpt + 1) % SAME_FRAME;
+                        currentAnnim = 2;
                         if (cpt == 0) frame = (frame + 1) % 8;
                     }
                 }
@@ -80,15 +82,29 @@ public class Hero {
                 perdu = true;
             }
         } else { // actuellement en vol
+            currentAnnim = 4;
             vy -= G*GameView.SPEED; // effet de la gravité
-            frame = (vy>0) ? 3 : 5;
 //            if (y < floor+slope*vx) y = floor+slope*vx; // atterrissage ?
         }
-
-
-
-
-
+        cpt = (cpt+1)% SAME_FRAME;
+        switch(currentAnnim){
+            case 1:
+                if (cpt==0) frame = (frame+1)%9;
+                offset = 0;
+                break;
+            case 2:
+                if (cpt==0) frame = (frame+1)%6;
+                offset = 9;
+                break;
+            case 3:
+                if (cpt==0) frame = (frame+1)%2;
+                offset = 18;
+                break;
+            case 4:
+                frame = 2;
+                offset = 18;
+                break;
+        }
         jump = 0;
     }
 
@@ -101,7 +117,8 @@ public class Hero {
             canvas.scale(-1,1);
         }
 
-        sprite.paint(canvas,frame,-sprite.w/2,y-sprite.h*BASELINE);
+        sprite.paint(canvas,frame + offset,-sprite.w/2,y-sprite.h*BASELINE);
+
 
 
         canvas.restore();
