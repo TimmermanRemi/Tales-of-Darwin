@@ -35,6 +35,7 @@
         android:background="@mipmap/bouton"
         android:onClick="button_l"
         android:text="LEFT"
+        android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -47,6 +48,7 @@
         android:background="@mipmap/bouton"
         android:onClick="button_r"
         android:text="RIGHT"
+        android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
