@@ -124,7 +124,7 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         // On met une couleur de fond
-        canvas.drawColor(0xff000000);
+        canvas.drawColor(0x00000000);
 
         // On choisit la transformation à appliquer à la vue i.e. la position
         // de la "camera"
